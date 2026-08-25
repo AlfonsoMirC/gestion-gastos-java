@@ -5,7 +5,7 @@ public class Main {
 
     public static void main(String[] args) {
 
-        // Mostar el titulo
+        // Mostrar el titulo
         System.out.println("Gestor semanal de gastos");
 
         // Arreglos para almacenar los datos
@@ -19,12 +19,13 @@ public class Main {
         // Mostrar el menu de opciones
         int opcion = 0;
 
-        while (opcion != 3) {
+        while (opcion != 4) {
 
             System.out.println("\n***** MENU *****");
             System.out.println("1) Registrar gasto");
             System.out.println("2) Mostrar gastos");
-            System.out.println("3) Salir");
+            System.out.println("3) Mostrar resumen");
+            System.out.println("4) Salir");
             System.out.println("Elige una opcion:");
 
             opcion = scanner.nextInt();
@@ -33,18 +34,19 @@ public class Main {
 
                 registrarGasto(conceptos, categorias, montos, scanner);
 
-            }
-            else if (opcion == 2) {
+            } else if (opcion == 2) {
 
                 mostrarGastos(conceptos, categorias, montos);
 
-            }
-            else if (opcion == 3) {
+            } else if (opcion == 3) {
+
+                mostrarResumen(conceptos, categorias, montos);
+
+            } else if (opcion == 4) {
 
                 System.out.println("Programa terminado.");
 
-            }
-            else {
+            } else {
 
                 System.out.println("Error: Elige una opcion valida.");
 
@@ -53,6 +55,11 @@ public class Main {
 
         scanner.close();
     }
+
+
+    // =========================================================
+    // METODO PARA MOSTRAR EL RESUMEN
+    // =========================================================
 
     public static void mostrarResumen(
             ArrayList<String> conceptos,
@@ -70,7 +77,7 @@ public class Main {
 
         int posicionMayor = obtenerPosicionGastoMayor(montos);
 
-        System.out.println("RESUMEN SEMANAL");
+        System.out.println("\n***** RESUMEN SEMANAL *****");
         System.out.println();
 
         System.out.println("Número de gastos: " + numeroGastos);
@@ -78,44 +85,74 @@ public class Main {
         System.out.printf("Promedio por gasto: $%.2f%n", promedio);
 
         if (posicionMayor != -1) {
+
             System.out.printf(
                     "Gasto mayor: %s, $%.2f%n",
                     conceptos.get(posicionMayor),
                     montos.get(posicionMayor)
             );
+
         } else {
-            System.out.println("Gasto mayor: No hay gastos registrados");
+
+            System.out.println(
+                    "Gasto mayor: No hay gastos registrados"
+            );
         }
     }
 
-    public static double calcularTotal(ArrayList<Double> montos) {
+
+    // =========================================================
+    // METODO PARA CALCULAR EL TOTAL
+    // =========================================================
+
+    public static double calcularTotal(
+            ArrayList<Double> montos) {
 
         double total = 0;
 
         for (int i = 0; i < montos.size(); i++) {
+
             total += montos.get(i);
         }
 
         return total;
     }
 
-    public static int obtenerPosicionGastoMayor(ArrayList<Double> montos) {
 
+    // =========================================================
+    // METODO PARA OBTENER LA POSICION DEL GASTO MAYOR
+    // =========================================================
+
+    public static int obtenerPosicionGastoMayor(
+            ArrayList<Double> montos) {
+
+        // Verificar si la lista está vacía
         if (montos.isEmpty()) {
+
             return -1;
         }
 
+        // Suponer inicialmente que el mayor está
+        // en la primera posición
         int posicionMayor = 0;
 
+        // Recorrer desde la segunda posición
         for (int i = 1; i < montos.size(); i++) {
 
+            // Comparar el monto actual con el mayor encontrado
             if (montos.get(i) > montos.get(posicionMayor)) {
+
                 posicionMayor = i;
             }
         }
 
         return posicionMayor;
     }
+
+
+    // =========================================================
+    // METODO PARA CALCULAR TOTAL POR CATEGORIA
+    // =========================================================
 
     public static double calcularTotalPorCategoria(
             ArrayList<String> categorias,
@@ -127,27 +164,18 @@ public class Main {
         for (int i = 0; i < categorias.size(); i++) {
 
             if (categorias.get(i).equals(categoriaBuscada)) {
+
                 total += montos.get(i);
             }
         }
 
         return total;
     }
-}
-// Calcular total de montos (calcularTotal(montons))
-//  Crear una variable total y asignarle 0.
-//  Recorrer la lista montos desde la primera posicion hasta la ultima.
-//  En cada posición sumar el monto actual a total y regresar total
 
-// Metodo obtenerPosicionGastoMayor(montos)
-//    Verificar si la lista montos está vacía.
-//    Si esta vacia regresa 0.
-//    Si no está vacía se crea la variable posicionMayor y asignarle 0.
-//    Recorre la lista desde la segunda posición hasta la última.
-//    Comparar el monto actual con el monto ubicado en posicionMayor.
-//    Si el monto actual es mayor:
-//    Actualizar posicionMayor con la posición actual.
-//    Regresar posicionMayor.
+
+    // =========================================================
+    // METODO PARA REGISTRAR UN GASTO
+    // =========================================================
 
     public static void registrarGasto(
             ArrayList<String> conceptos,
@@ -157,17 +185,25 @@ public class Main {
 
         // Declaracion de variables temporales
         String concepto;
-        String categoria = "null";
+        String categoria;
         double monto;
         int categInt;
 
-        // Ingresar el concepto
+        // =====================================================
+        // INGRESAR EL CONCEPTO
+        // =====================================================
+
         System.out.println("\nIntroduce el concepto:");
 
-        // Capturar el concepto
-        concepto = scanner.next();
+        // nextLine permite introducir espacios
+        scanner.nextLine();
+        concepto = scanner.nextLine();
 
-        // Ingresar el numero de categoria
+
+        // =====================================================
+        // INGRESAR LA CATEGORIA
+        // =====================================================
+
         int r = 0;
 
         while (r == 0) {
@@ -183,47 +219,112 @@ public class Main {
 
             categInt = scanner.nextInt();
 
-            // Asociar categoria
+            // Verificar que la categoria sea valida
             if (categInt < 1 || categInt > 5) {
 
-                System.out.println("Error: Elige una categoria valida");
+                System.out.println(
+                        "Error: Elige una categoria valida."
+                );
+
                 r = 0;
 
-            }
-            else if (categInt == 1) {
+            } else if (categInt == 1) {
 
                 categoria = "Materiales";
                 r = 1;
 
-            }
-            else if (categInt == 2) {
+                guardarGasto(
+                        concepto,
+                        categoria,
+                        scanner,
+                        conceptos,
+                        categorias,
+                        montos
+                );
+
+                return;
+
+            } else if (categInt == 2) {
 
                 categoria = "Transporte";
                 r = 1;
 
-            }
-            else if (categInt == 3) {
+                guardarGasto(
+                        concepto,
+                        categoria,
+                        scanner,
+                        conceptos,
+                        categorias,
+                        montos
+                );
+
+                return;
+
+            } else if (categInt == 3) {
 
                 categoria = "Alimentos";
                 r = 1;
 
-            }
-            else if (categInt == 4) {
+                guardarGasto(
+                        concepto,
+                        categoria,
+                        scanner,
+                        conceptos,
+                        categorias,
+                        montos
+                );
+
+                return;
+
+            } else if (categInt == 4) {
 
                 categoria = "Entretenimiento";
                 r = 1;
 
-            }
-            else if (categInt == 5) {
+                guardarGasto(
+                        concepto,
+                        categoria,
+                        scanner,
+                        conceptos,
+                        categorias,
+                        montos
+                );
+
+                return;
+
+            } else if (categInt == 5) {
 
                 categoria = "Otros";
                 r = 1;
 
+                guardarGasto(
+                        concepto,
+                        categoria,
+                        scanner,
+                        conceptos,
+                        categorias,
+                        montos
+                );
+
+                return;
             }
         }
+    }
 
 
-        // Ingresar el monto
+    // =========================================================
+    // METODO PARA GUARDAR EL GASTO
+    // =========================================================
+
+    public static void guardarGasto(
+            String concepto,
+            String categoria,
+            Scanner scanner,
+            ArrayList<String> conceptos,
+            ArrayList<String> categorias,
+            ArrayList<Double> montos) {
+
+        double monto;
         int montoValido = 0;
 
         while (montoValido == 0) {
@@ -241,8 +342,7 @@ public class Main {
 
                 montoValido = 0;
 
-            }
-            else {
+            } else {
 
                 // Guardar los datos
                 conceptos.add(concepto);
@@ -251,12 +351,17 @@ public class Main {
 
                 montoValido = 1;
 
-                System.out.println("Gasto registrado correctamente.");
-
+                System.out.println(
+                        "Gasto registrado correctamente."
+                );
             }
         }
     }
 
+
+    // =========================================================
+    // METODO PARA MOSTRAR LOS GASTOS
+    // =========================================================
 
     public static void mostrarGastos(
             ArrayList<String> conceptos,
@@ -268,7 +373,10 @@ public class Main {
         // Verificar si existen gastos
         if (conceptos.size() == 0) {
 
-            System.out.println("No hay gastos registrados.");
+            System.out.println(
+                    "No hay gastos registrados."
+            );
+
             return;
         }
 
@@ -284,11 +392,12 @@ public class Main {
         // Recorrer los arreglos
         for (int i = 0; i < conceptos.size(); i++) {
 
-            System.out.println(
-                    (i + 1) + " | " +
-                            conceptos.get(i) + " | " +
-                            categorias.get(i) + " | $" +
-                            montos.get(i)
+            System.out.printf(
+                    "%d | %s | %s | $%.2f%n",
+                    i + 1,
+                    conceptos.get(i),
+                    categorias.get(i),
+                    montos.get(i)
             );
         }
     }
