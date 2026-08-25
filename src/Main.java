@@ -57,9 +57,7 @@ public class Main {
     }
 
 
-    // =========================================================
     // METODO PARA MOSTRAR EL RESUMEN
-    // =========================================================
 
     public static void mostrarResumen(
             ArrayList<String> conceptos,
@@ -101,9 +99,7 @@ public class Main {
     }
 
 
-    // =========================================================
     // METODO PARA CALCULAR EL TOTAL
-    // =========================================================
 
     public static double calcularTotal(
             ArrayList<Double> montos) {
@@ -119,9 +115,7 @@ public class Main {
     }
 
 
-    // =========================================================
     // METODO PARA OBTENER LA POSICION DEL GASTO MAYOR
-    // =========================================================
 
     public static int obtenerPosicionGastoMayor(
             ArrayList<Double> montos) {
@@ -149,10 +143,7 @@ public class Main {
         return posicionMayor;
     }
 
-
-    // =========================================================
     // METODO PARA CALCULAR TOTAL POR CATEGORIA
-    // =========================================================
 
     public static double calcularTotalPorCategoria(
             ArrayList<String> categorias,
@@ -172,10 +163,7 @@ public class Main {
         return total;
     }
 
-
-    // =========================================================
     // METODO PARA REGISTRAR UN GASTO
-    // =========================================================
 
     public static void registrarGasto(
             ArrayList<String> conceptos,
@@ -189,9 +177,7 @@ public class Main {
         double monto;
         int categInt;
 
-        // =====================================================
         // INGRESAR EL CONCEPTO
-        // =====================================================
 
         System.out.println("\nIntroduce el concepto:");
 
@@ -200,9 +186,7 @@ public class Main {
         concepto = scanner.nextLine();
 
 
-        // =====================================================
         // INGRESAR LA CATEGORIA
-        // =====================================================
 
         int r = 0;
 
@@ -312,9 +296,7 @@ public class Main {
     }
 
 
-    // =========================================================
     // METODO PARA GUARDAR EL GASTO
-    // =========================================================
 
     public static void guardarGasto(
             String concepto,
@@ -359,9 +341,7 @@ public class Main {
     }
 
 
-    // =========================================================
     // METODO PARA MOSTRAR LOS GASTOS
-    // =========================================================
 
     public static void mostrarGastos(
             ArrayList<String> conceptos,
